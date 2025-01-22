@@ -1,0 +1,164 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+ #include <time.h>
+ #define MAX_BOOKS 5
+ // Structure for each student
+ struct Student {
+ char name[50];
+ int rollNo;
+ int books[MAX_BOOKS];
+ char dateAdded[11]; // For storing date in "YYYY-MM-DD" format
+ char timeAdded[9]; // For storing time in "HH:MM:SS" format
+ struct Student *next;
+ };
+ // Function to create a new student node
+ struct Student* createStudent(char *name, int rollNo, int *books) {
+ struct Student *newStudent = (struct Student*)malloc(sizeof(struct Student));
+ strcpy(newStudent->name, name);
+ newStudent->rollNo = rollNo;
+ for (int i = 0; i < MAX_BOOKS; i++) {
+ newStudent->books[i] = books[i];
+ }
+ newStudent->next = NULL;
+ // Get the current date and time
+time_t t = time(NULL);
+ struct tm *tm_info = localtime(&t);
+ // Format date and time
+ strftime(newStudent->dateAdded, sizeof(newStudent->dateAdded), "%Y-%m-%d", tm_info);
+ strftime(newStudent->timeAdded, sizeof(newStudent->timeAdded), "%H:%M:%S", tm_info);
+ return newStudent;
+ }
+ // Function to add a student at the beginning of the linked list
+ void pushStudent(struct Student **head, char *name, int rollNo, int *books) {
+ struct Student *newStudent = createStudent(name, rollNo, books);
+ newStudent->next = *head;
+ *head = newStudent;
+ printf("Student added successfully!\n");
+ }
+ // Function to search for a student by roll number
+ struct Student* searchStudent(struct Student *head, int rollNo) {
+ struct Student *current = head;
+ while (current != NULL) {
+ if (current->rollNo == rollNo) {
+ return current;
+ }
+ current = current->next;
+ }
+ return NULL;
+ }
+ // Function to delete a student if all books are returned
+ void deleteStudent(struct Student **head, int rollNo) {
+ struct Student *current = *head;
+ struct Student *previous = NULL;
+ while (current != NULL && current->rollNo != rollNo) {
+ previous = current;
+ current = current->next;
+ }
+ if (current == NULL) {
+ printf("Student with roll number %d not found.\n", rollNo);
+ return;
+ }
+int allBooksReturned = 1;
+ for (int i = 0; i < MAX_BOOKS; i++) {
+ if (current->books[i] != 0) {
+ allBooksReturned = 0;
+ break;
+ }
+ }
+ if (allBooksReturned) {
+ if (previous == NULL) { // Deleting the head node
+ *head = current->next;
+ } else {
+ previous->next = current->next;
+ }
+ free(current);
+ printf("Student with roll number %d deleted successfully.\n", rollNo);
+ } else {
+ printf("Cannot delete student. All books are not returned.\n");
+ }
+ }
+ // Function to print a single student's details
+ void printStudent(struct Student *student) {
+ if (student == NULL) {
+ printf("Student not found.\n");
+ return;
+ }
+ printf("Name: %s\n", student->name);
+ printf("Roll No: %d\n", student->rollNo);
+ printf("Date Added: %s\n", student->dateAdded);
+ printf("Time Added: %s\n", student->timeAdded);
+ printf("Books: ");
+ for (int i = 0; i < MAX_BOOKS; i++) {
+ if (student->books[i] != 0) {
+ printf("%d ", student->books[i]);
+ }
+ }
+ printf("\n");
+ }
+ // Function to print all students and their details
+ void printAllStudents(struct Student *head) {
+ if (head == NULL) {
+printf("No students in the system.\n");
+ return;
+ }
+ struct Student *current = head;
+ printf("\n--- All Students---\n");
+ while (current != NULL) {
+ printStudent(current);
+ printf("--------------------\n");
+ current = current->next;
+ }
+ }
+ // Main function
+ int main() {
+ struct Student *head = NULL;
+ int choice;
+ char name[50];
+ int rollNo;
+ int books[MAX_BOOKS] = {0};
+ while (1) {
+ printf("\nLibrary System:\n");
+ printf("1. Add Student\n");
+ printf("2. Search Student\n");
+ printf("3. Delete Student\n");
+ printf("4. Print All Students\n");
+ printf("5. Exit\n");
+ printf("Enter your choice: ");
+ scanf("%d", &choice);
+ switch (choice) {
+ case 1:
+ printf("Enter name: ");
+ scanf(" %[^\n]%*c", name);
+ printf("Enter roll number: ");
+ scanf("%d", &rollNo);
+ printf("Enter up to 5 book IDs (enter 0 if no book):\n");
+ for (int i = 0; i < MAX_BOOKS; i++) {
+ printf("Book %d: ", i + 1);
+ scanf("%d", &books[i]);
+ }
+ pushStudent(&head, name, rollNo, books);
+break;
+ case 2:
+ printf("Enter roll number to search: ");
+ scanf("%d", &rollNo);
+ struct Student *student = searchStudent(head, rollNo);
+ printStudent(student);
+ break;
+ case 3:
+ printf("Enter roll number to delete: ");
+ scanf("%d", &rollNo);
+ deleteStudent(&head, rollNo);
+ break;
+ case 4:
+ printAllStudents(head);
+ break;
+ case 5:
+ exit(0);
+ default:
+ printf("Invalid choice. Please try again.\n");
+ }
+ }
+ return 0;
+ }
+ 
