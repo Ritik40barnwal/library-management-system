@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library Management System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="dashboard">
+
+<div class="box">
+
+<h3>Total Students</h3>
+
+<p id="studentCount">
+0
+</p>
+
+</div>
+
+<div class="box">
+
+<h3>Books Issued</h3>
+
+<p id="bookCount">
+0
+</p>
+
+</div>
+
+<div class="box">
+
+<h3>5 books alloted</h3>
+
+<p id="slotCount">
+0
+</p>
+
+</div>
+
+</div>
+
+<h1>📚 Library Management
+    
+    <button id="searchBtn" onclick="searchStudent()">
+
+🔍 Search
+
+</button>
+</h1>
+
+
+
+
+<div id="searchBox">
+
+<input
+type="text"
+id="search"
+placeholder=
+"Search by Roll / Name">
+
+</div>
+
+<div class="card">
+
+<input type="text" id="name" placeholder="Student Name">
+
+<input type="number" id="roll" placeholder="Roll Number">
+
+
+
+<div class="books">
+
+<input type="number" placeholder="Book ID 1" class="book">
+<input type="number" placeholder="Book ID 2" class="book">
+<input type="number" placeholder="Book ID 3" class="book">
+<input type="number" placeholder="Book ID 4" class="book">
+<input type="number" placeholder="Book ID 5" class="book">
+
+</div>
+
+<div class="buttons">
+
+<button onclick="addStudent()">Add</button>
+
+
+
+<button onclick="deleteStudent()">Delete</button>
+
+<button onclick="showStudents()">Show All</button>
+
+<button onclick="returnBook()">Return Book</button>
+
+<button onclick="sortByName()">
+Sort A->Z
+</button>
+
+
+
+</div>
+
+</div>
+
+<div id="output"></div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
