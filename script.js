@@ -45,7 +45,7 @@ try{
 
 let res=
 await fetch(
-"http://localhost:5000/student",
+"https://library-management-system-ftho.onrender.com/student",
 {
 
 method:"POST",
@@ -102,8 +102,10 @@ x!==0
 student.books =
 books;
 
+let retry =
+
 await fetch(
-"http://localhost:5000/student",
+"https://library-management-system-ftho.onrender.com/student",
 {
 
 method:"POST",
@@ -122,10 +124,15 @@ student
 
 );
 
-alert(
-"Books appended"
-);
+let retryData =
 
+await retry.json();
+
+alert(
+
+retryData.message
+
+);
 }
 
 }
@@ -181,7 +188,7 @@ let res=
 
 await fetch(
 
-`http://localhost:5000/student/${query}`
+`https://library-management-system-ftho.onrender.com/student/${query}`
 
 );
 
@@ -211,7 +218,7 @@ async function sortByName(){
 
 let res =
 await fetch(
-"http://localhost:5000/students"
+"https://library-management-system-ftho.onrender.com/students"
 );
 
 let data =
@@ -262,7 +269,7 @@ let res=
 
 await fetch(
 
-`http://localhost:5000/student/${roll}`,
+`https://library-management-system-ftho.onrender.com/student/${roll}`,
 
 {
 
@@ -336,7 +343,7 @@ try{
 
 let res =
 await fetch(
-"http://localhost:5000/return",
+"https://library-management-system-ftho.onrender.com/return",
 {
 
 method:"PUT",
@@ -400,9 +407,21 @@ async function showStudents(){
 
 try{
 
+let output=
+
+document
+.getElementById(
+"output"
+);
+
+output.innerHTML=
+
+"<h3>Loading...</h3>";
+
 let res =
+
 await fetch(
-"http://localhost:5000/students"
+"https://library-management-system-ftho.onrender.com/students"
 );
 
 if(
@@ -425,7 +444,14 @@ catch(err){
 
 console.log(err);
 
+document
+.getElementById(
+"output"
+)
 
+.innerHTML=
+
+"<h3>Cannot Load Students</h3>";
 
 }
 
