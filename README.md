@@ -5,8 +5,8 @@ This project allows managing student records and issued books with a clean UI an
 
 ## 🚀 Live Demo
 
-Frontend: *(Add your Vercel URL here)*
-Backend: *(Add your Render URL here)*
+Frontend: https://library-management-system-six-sigma.vercel.app
+Backend: https://library-management-system-ftho.onrender.com
 
 ---
 
